@@ -1,6 +1,6 @@
 const { merge } = require("webpack-merge");
 const singleSpaDefaults = require("webpack-config-single-spa-react-ts");
-const Dotenv = require('dotenv-webpack');
+const webpack = require("webpack");
 
 module.exports = (webpackConfigEnv, argv) => {
   const defaultConfig = singleSpaDefaults({
@@ -11,19 +11,17 @@ module.exports = (webpackConfigEnv, argv) => {
     outputSystemJS: false,
   });
 
+  const isProduction = argv.mode === "production" || webpackConfigEnv.NODE_ENV === "production";
+
   return merge(defaultConfig, {
-    // modify the webpack config however you'd like to by adding to this object
-   plugins: [
-      new Dotenv({
-        path: `.env.${webpackConfigEnv.NODE_ENV || 'development'}`,
-        systemvars: true,
-        safe: true,
-        silent: true
-      }),
+    plugins: [
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(webpackConfigEnv.NODE_ENV || 'development'),
-        'process.env.API_BASE_URL': JSON.stringify(process.env.API_BASE_URL)
-      })
+        "process.env.API_BASE_URL": JSON.stringify(
+          isProduction 
+            ? "https://sua-api-prod.com" 
+            : "http://localhost:3000"
+        ),
+      }),
     ],
   });
 };

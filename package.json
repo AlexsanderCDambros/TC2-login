@@ -4,7 +4,7 @@
     "start": "webpack serve",
     "start:standalone": "webpack serve --env standalone",
     "build": "concurrently npm:build:*",
-    "build:webpack": "NODE_ENV=production webpack --mode=production",
+    "build:webpack": "webpack --mode=production",
     "analyze": "webpack --mode=production --env analyze",
     "lint": "eslint src --ext js,ts,tsx",
     "format": "prettier --write .",
@@ -14,7 +14,7 @@
     "prepare": "husky install",
     "coverage": "cross-env BABEL_ENV=test jest --coverage",
     "build:types": "tsc",
-    "dev": "NODE_ENV=development webpack serve --port 9002"
+    "dev": "webpack serve --port 9002"
   },
   "devDependencies": {
     "@babel/core": "^7.23.3",
@@ -29,7 +29,6 @@
     "babel-jest": "^27.5.1",
     "concurrently": "^6.2.1",
     "cross-env": "^7.0.3",
-    "dotenv-webpack": "^8.1.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-ts-react-important-stuff": "^3.0.0",
