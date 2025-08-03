@@ -1,7 +1,4 @@
-const API_BASE_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://sua-api-prod.com"
-    : "http://localhost:3000";
+const API_BASE_URL = process.env.API_BASE_URL;
 
 export const registerUser = async (userData) => {
   const response = await fetch(`${API_BASE_URL}/user`, {

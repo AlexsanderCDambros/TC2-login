@@ -15,10 +15,14 @@ module.exports = (webpackConfigEnv, argv) => {
     // modify the webpack config however you'd like to by adding to this object
    plugins: [
       new Dotenv({
-        path: `.env.${process.env.NODE_ENV || 'development'}`, // Carrega o .env correto
-        systemvars: true, // Permite usar variáveis de sistema
-        safe: true, // Não quebra se o arquivo .env não existir
-        silent: true // Suprime avisos
+        path: `.env.${webpackConfigEnv.NODE_ENV || 'development'}`,
+        systemvars: true,
+        safe: true,
+        silent: true
+      }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(webpackConfigEnv.NODE_ENV || 'development'),
+        'process.env.API_BASE_URL': JSON.stringify(process.env.API_BASE_URL)
       })
     ],
   });
